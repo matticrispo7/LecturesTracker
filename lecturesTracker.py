@@ -34,13 +34,13 @@ def checkFile():
             writer.writerow(['course','lecture','date','email_sent'])
             writer.writerow([' ',' ',' ',' ']) #first empty line
 
-def sendMail(receiver, course):
+def sendMail(receiver, course, title):
     #build message
     msg = EmailMessage()
     msg['Subject'] = "Lecture's published"
     msg['From'] = EMAIL_ADDRESS
     msg['To'] = receiver
-    msgBody = "Hey new lecture in " + course + " has been pusblished!"
+    msgBody = "Hey new lecture in " + course + " with the title " + title +" has been pusblished!"
     #TODO: modify message's body
     msg.set_content(msgBody)
     with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
@@ -107,7 +107,7 @@ def ricercaOperativa(driver):
         else:
             #lecture not found 
             print("lectures not found")
-            mailSent = sendMail(EMAIL_ADDRESS, "RICERCA OPERATIVA")
+            mailSent = sendMail(EMAIL_ADDRESS, "RICERCA OPERATIVA", lecture_title[0])
             new_row = {'course':'ricerca operativa', 'lecture': lecture_title[0], 'date':date, 'email_sent': mailSent}
             #append row to df
             tempDF = df.append(new_row,ignore_index=True)
@@ -140,7 +140,7 @@ def sistemiMultivariabili(driver):
         else:
             #lecture not found 
             print("lectures not found")
-            mailSent = sendMail(EMAIL_ADDRESS, "SISTEMI MULTIVARIABILI")
+            mailSent = sendMail(EMAIL_ADDRESS, "SISTEMI MULTIVARIABILI", lecture_title[0])
             new_row = {'course':'sistemi multivariabili', 'lecture': lecture_title[0], 'date':date, 'email_sent': mailSent}
             #append row to df
             tempDF = df.append(new_row,ignore_index=True)
